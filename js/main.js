@@ -83,11 +83,36 @@ function deletaElemento(tag, id) {
 
 // Baixando o arquivo
 
-document.getElementById("btnCompartilhar").addEventListener("click", function() {
-    var mensagem = "Lista de Publicações:\n"; // Mensagem de texto para compartilhar
-    itens.forEach(item => { // Iterar sobre os itens do localStorage
-        mensagem += `Nome: ${item.nome}, Quantidade: ${item.quantidade}\n`; // Adicionar os dados dos itens na mensagem de texto
-    });
-    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`; // URL de compartilhamento do WhatsApp
-    window.open(url, "_blank"); // Abrir a URL em uma nova janela
+// document.getElementById("btnCompartilhar").addEventListener("click", function() {
+//     var mensagem = "Lista de Publicações:\n"; // Mensagem de texto para compartilhar
+//     itens.forEach(item => { // Iterar sobre os itens do localStorage
+//         mensagem += `Nome: ${item.nome}, Quantidade: ${item.quantidade}\n`; // Adicionar os dados dos itens na mensagem de texto
+//     });
+//     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`; // URL de compartilhamento do WhatsApp
+//     window.open(url, "_blank"); // Abrir a URL em uma nova janela
+// });
+
+// Seletor para o botão de compartilhar
+const btnCompartilhar = document.getElementById("btnCompartilhar");
+
+// Adicione um ouvinte de eventos de clique ao botão de compartilhar
+btnCompartilhar.addEventListener("click", () => {
+  // Verifique se a API de compartilhamento é suportada pelo navegador
+  if (navigator.share) {
+    // Compartilhe os dados do localStorage via WhatsApp usando a API de compartilhamento do Web Share
+    navigator.share({
+      title: "Lista de Publicações",
+      text: "Confira minha lista de publicações:",
+      url: window.location.href
+    })
+      .then(() => {
+        console.log("Dados compartilhados com sucesso!");
+      })
+      .catch((error) => {
+        console.error("Erro ao compartilhar os dados:", error);
+      });
+  } else {
+    // Se a API de compartilhamento não for suportada, mostre uma mensagem de erro
+    console.error("API de compartilhamento não suportada pelo navegador.");
+  }
 });
