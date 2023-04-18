@@ -1,5 +1,5 @@
 html {
-    background: radial-gradient(farthest-corner at right top, #21A09D, #06182D);
+    background: radial-gradient(farthest-corner at right top, #21A09D, #06182D) fixed;
     height: 100%;
     font-family: 'Roboto', cursive;
 }
@@ -45,6 +45,12 @@ html {
 .cadastrar {
     background-color: #40112D;
     color: #FFFFFF;
+    cursor: pointer;
+}
+
+.compartilhar {
+    background-color: #f6f6f6;
+    color: #40112D;
     cursor: pointer;
 }
 

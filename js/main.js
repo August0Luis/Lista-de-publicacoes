@@ -80,3 +80,14 @@ function deletaElemento(tag, id) {
 
     localStorage.setItem("itens", JSON.stringify(itens))
 }
+
+// Baixando o arquivo
+
+document.getElementById("btnCompartilhar").addEventListener("click", function() {
+    var mensagem = "Lista de Publicações:\n"; // Mensagem de texto para compartilhar
+    itens.forEach(item => { // Iterar sobre os itens do localStorage
+        mensagem += `Nome: ${item.nome}, Quantidade: ${item.quantidade}\n`; // Adicionar os dados dos itens na mensagem de texto
+    });
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`; // URL de compartilhamento do WhatsApp
+    window.open(url, "_blank"); // Abrir a URL em uma nova janela
+});
