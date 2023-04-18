@@ -2,9 +2,9 @@ const form = document.getElementById("novoItem")
 const lista = document.getElementById("lista")
 const itens = JSON.parse(localStorage.getItem("itens")) || []
 
-itens.forEach( (elemento) => {
+itens.forEach((elemento) => {
     criaElemento(elemento)
-} )
+})
 
 form.addEventListener("submit", (evento) => {
     evento.preventDefault()
@@ -12,7 +12,7 @@ form.addEventListener("submit", (evento) => {
     const nome = evento.target.elements['nome']
     const quantidade = evento.target.elements['quantidade']
 
-    const existe = itens.find( elemento => elemento.nome === nome.value )
+    const existe = itens.find(elemento => elemento.nome === nome.value)
 
     const itemAtual = {
         "nome": nome.value,
@@ -23,10 +23,10 @@ form.addEventListener("submit", (evento) => {
         itemAtual.id = existe.id
 
         atualizaElemento(itemAtual)
-//Refatoração da condicional if else, atualizando um id para cada item
+        //Refatoração da condicional if else, atualizando um id para cada item
         itens[itens.findIndex(elemento => elemento.id === existe.id)] = itemAtual
     } else {
-        itemAtual.id = itens[itens.length -1] ? (itens[itens.length-1]).id + 1 : 0;
+        itemAtual.id = itens[itens.length - 1] ? (itens[itens.length - 1]).id + 1 : 0;
 
         criaElemento(itemAtual)
 
@@ -56,7 +56,7 @@ function criaElemento(item) {
 }
 
 function atualizaElemento(item) {
-    document.querySelector("[data-id='"+item.id+"']").innerHTML = item.quantidade
+    document.querySelector("[data-id='" + item.id + "']").innerHTML = item.quantidade
 }
 
 //Função para criar botão com evento de click nos itens, e retornar os itens clicados
@@ -64,7 +64,7 @@ function botaoDeleta(id) {
     const elementoBotao = document.createElement("button")
     elementoBotao.innerText = "X"
 
-    elementoBotao.addEventListener("click", function() {
+    elementoBotao.addEventListener("click", function () {
         deletaElemento(this.parentNode, id)
     })
 
@@ -73,7 +73,7 @@ function botaoDeleta(id) {
 
 //Função para deletar os itens enviados da função botaoDeleta no array de itens e no navegador
 
-function deletaElemento(tag, id) { 
+function deletaElemento(tag, id) {
     tag.remove()
 
     itens.splice(itens.findIndex(elemento => elemento.id === id), 1)
@@ -83,36 +83,11 @@ function deletaElemento(tag, id) {
 
 // Baixando o arquivo
 
-// document.getElementById("btnCompartilhar").addEventListener("click", function() {
-//     var mensagem = "Lista de Publicações:\n"; // Mensagem de texto para compartilhar
-//     itens.forEach(item => { // Iterar sobre os itens do localStorage
-//         mensagem += `Nome: ${item.nome}, Quantidade: ${item.quantidade}\n`; // Adicionar os dados dos itens na mensagem de texto
-//     });
-//     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`; // URL de compartilhamento do WhatsApp
-//     window.open(url, "_blank"); // Abrir a URL em uma nova janela
-// });
-
-// Seletor para o botão de compartilhar
-const btnCompartilhar = document.getElementById("btnCompartilhar");
-
-// Adicione um ouvinte de eventos de clique ao botão de compartilhar
-btnCompartilhar.addEventListener("click", () => {
-  // Verifique se a API de compartilhamento é suportada pelo navegador
-  if (navigator.share) {
-    // Compartilhe os dados do localStorage via WhatsApp usando a API de compartilhamento do Web Share
-    navigator.share({
-      title: "Lista de Publicações",
-      text: "Confira minha lista de publicações:",
-      url: window.location.href
-    })
-      .then(() => {
-        console.log("Dados compartilhados com sucesso!");
-      })
-      .catch((error) => {
-        console.error("Erro ao compartilhar os dados:", error);
-      });
-  } else {
-    // Se a API de compartilhamento não for suportada, mostre uma mensagem de erro
-    console.error("API de compartilhamento não suportada pelo navegador.");
-  }
+document.getElementById("btnCompartilhar").addEventListener("click", function () {
+    var mensagem = "Lista de Publicações:\n"; // Mensagem de texto para compartilhar
+    itens.forEach(item => { // Iterar sobre os itens do localStorage
+        mensagem += `Nome: ${item.nome}, Quantidade: ${item.quantidade}\n`; // Adicionar os dados dos itens na mensagem de texto
+    });
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`; // URL de compartilhamento do WhatsApp
+    window.open(url, "_blank"); // Abrir a URL em uma nova janela
 });
